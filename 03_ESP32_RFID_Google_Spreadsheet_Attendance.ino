@@ -8,7 +8,11 @@
 
 // Defines SS/SDA PIN and Reset PIN for RFID-RC522.
 #define SS_PIN  5  
-#define RST_PIN 22
+#define RST_PIN 34
+#define BUZZER_PIN 2  // Buzzer connected to pin D2
+#define GREEN_LED_PIN 14  // LED xanh lá ở D14
+#define RED_LED_PIN 22   // LED đỏ ở D22  
+
 
 // Defines the button PIN.
 #define BTN_PIN 15
@@ -19,7 +23,7 @@ const char* password = "001203007932"; //--> Your wifi password
 //----------------------------------------
 
 // Google script Web_App_URL.
-String Web_App_URL = "https://script.google.com/macros/s/AKfycbzcV1fHEjujJpN4EMM5qMjLRlg4mdMhi_VI07OO7DqEpP8jWjQnOwwTnczvpotEbYSY/exec";
+String Web_App_URL = "https://script.google.com/macros/s/AKfycbzP4ky3kXz2NYyR_jvavbBv1vmHDSbmXW1LGKWv9smRXuRmSiHa6PQD7nRslMkxh6VGtg/exec";
 
 String reg_Info = "";
 
@@ -200,6 +204,10 @@ void http_Req(String str_modes, String str_uid) {
         }
 
         if (atc_Info == "atcErr01") {
+          digitalWrite(RED_LED_PIN, HIGH);
+          digitalWrite(GREEN_LED_PIN, LOW);
+          delay(2000);
+          digitalWrite(RED_LED_PIN, LOW); // Tắt đèn đỏ
           lcd.clear();
           delay(500);
           lcd.setCursor(6,0);
@@ -213,6 +221,11 @@ void http_Req(String str_modes, String str_uid) {
           delay(5000);
           lcd.clear();
           delay(500);
+        }  else {
+          digitalWrite(GREEN_LED_PIN, HIGH);
+          digitalWrite(RED_LED_PIN, LOW);
+          delay(2000);
+          digitalWrite(GREEN_LED_PIN, LOW); // Tắt đèn xanh
         }
 
         atc_Info = "";
@@ -313,6 +326,11 @@ int getUID() {
   mfrc522.PICC_HaltA();
   mfrc522.PCD_StopCrypto1();
   
+  // Sound the buzzer when a card is read
+  tone(BUZZER_PIN, 1000);  // Generate a 1kHz tone
+  delay(200);               // Buzzer sound duration (200 ms)
+  noTone(BUZZER_PIN);       // Turn off the buzzer
+
   return 1;
 }
 //________________________________________________________________________________
@@ -338,6 +356,10 @@ void setup(){
   delay(1000);
 
   pinMode(BTN_PIN, INPUT_PULLUP);
+  pinMode(BUZZER_PIN, OUTPUT);  // Set the buzzer pin as output
+  pinMode(GREEN_LED_PIN, OUTPUT); // Set LED xanh làm output
+  pinMode(RED_LED_PIN, OUTPUT);   // Set LED đỏ làm output
+
   
   // Initialize LCD.
   lcd.init();
