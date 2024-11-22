@@ -11,7 +11,7 @@
 #define RST_PIN 34
 #define BUZZER_PIN 2  // Buzzer connected to pin D2
 #define GREEN_LED_PIN 14  // LED xanh lá ở D14
-#define RED_LED_PIN 22   // LED đỏ ở D22  
+#define RED_LED_PIN 32   // LED đỏ ở D22  
 
 
 // Defines the button PIN.
