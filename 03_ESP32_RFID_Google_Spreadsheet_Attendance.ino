@@ -99,19 +99,7 @@ void http_Req(String str_modes, String str_uid) {
     http.end();
     //----------------------------------------
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Example :                                                                                              //
-    // Sending an http request to fill in "Time In" attendance.                                               //
-    // User data :                                                                                            //
-    // - Name : Adam                                                                                          //
-    // - UID  : A01                                                                                           //
-    // So the payload received if the http request is successful and the parameters are correct is as below : //
-    // OK,Adam,29/10/2023,08:30:00 ---> Status,Name,Date,Time_In                                              //
-    //                                                                                                        //
-    // So, if you want to retrieve "Status", then getValue(payload, ',', 0);                                  //
-    // String sts_Res = getValue(payload, ',', 0);                                                            //
-    // So the value of sts_Res is "OK".                                                                       //
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     
     String sts_Res = getValue(payload, ',', 0);
 
