@@ -57,6 +57,7 @@ function doGet(e) {
       var getLastRowUIDCol = findLastRow(sheet_id, sheet_UD, uid_column);
       var newUID = sheet_open.getRange(uid_column + (getLastRowUIDCol + 1));
       newUID.setValue(uid_val);
+      sheet_user_data.getRange(getLastRowUIDCol + 2, 1).setValue(name_val);
       sheet_user_data.getRange(getLastRowUIDCol + 2, 4).setValue(msv_val);  // Store MSV in column D.
       result += ",R_Successful";
       return ContentService.createTextOutput(result);
@@ -203,8 +204,8 @@ function checkTimeout() {
 
         Logger.log("Elapsed Time (s): " + elapsedTime);
 
-        // Nếu đã quá 30 giây từ thời điểm TimeIn mà chưa có TimeOut.
-        if (elapsedTime > 30) {
+        // Nếu đã quá 3000 giây từ thời điểm TimeIn mà chưa có TimeOut.
+        if (elapsedTime > 3000) {
           var timeOutCell = sheet.getRange(i + 1, 5); // Cột E của hàng hiện tại
           timeOutCell.setNumberFormat('@STRING@'); // Đặt định dạng về dạng văn bản
           timeOutCell.setValue("-1"); // Cập nhật TimeOut thành -1
