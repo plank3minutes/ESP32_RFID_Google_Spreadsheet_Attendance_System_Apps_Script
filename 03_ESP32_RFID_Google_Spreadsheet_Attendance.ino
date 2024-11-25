@@ -8,7 +8,7 @@
 
 // Defines SS/SDA PIN and Reset PIN for RFID-RC522.
 #define SS_PIN  5  
-#define RST_PIN 34
+#define RST_PIN 4
 #define BUZZER_PIN 2  // Buzzer connected to pin D2
 #define GREEN_LED_PIN 14  // LED xanh lá ở D14
 #define RED_LED_PIN 22   // LED đỏ ở D22  
