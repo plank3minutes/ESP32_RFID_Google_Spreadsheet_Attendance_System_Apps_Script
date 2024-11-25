@@ -11,7 +11,7 @@
 #define RST_PIN 34
 #define BUZZER_PIN 2  // Buzzer connected to pin D2
 #define GREEN_LED_PIN 14  // LED xanh lá ở D14
-#define RED_LED_PIN 32   // LED đỏ ở D22  
+#define RED_LED_PIN 22   // LED đỏ ở D22  
 
 
 // Defines the button PIN.
@@ -280,8 +280,7 @@ void http_Req(String str_modes, String str_uid) {
 //________________________________________________________________________________
 
 //________________________________________________________________________________getValue()
-// String function to process the data (Split String).
-// I got this from : https://www.electroniclinic.com/reyax-lora-based-multiple-sensors-monitoring-using-arduino/
+
 String getValue(String data, char separator, int index) {
   int found = 0;
   int strIndex[] = { 0, -1 };
@@ -393,8 +392,7 @@ void setup(){
 
   //:::::::::::::::::: The process of connecting ESP32 with WiFi Hotspot / WiFi Router.
   // The process timeout of connecting ESP32 with WiFi Hotspot / WiFi Router is 20 seconds.
-  // If within 20 seconds the ESP32 has not been successfully connected to WiFi, the ESP32 will restart.
-  // I made this condition because on my ESP32, there are times when it seems like it can't connect to WiFi, so it needs to be restarted to be able to connect to WiFi.
+  
 
   int connecting_process_timed_out = 20; //--> 20 = 20 seconds.
   connecting_process_timed_out = connecting_process_timed_out * 2;
@@ -435,25 +433,7 @@ void setup(){
 void loop(){
   // put your main code here, to run repeatedly:
 
-  //----------------------------------------Switches modes when the button is pressed.
-  // modes = "reg" means the mode for new user registration.
-  // modes = "atc" means the mode for filling in attendance (Time In and Time Out).
-
-  int BTN_State = digitalRead(BTN_PIN);
-
-  if (BTN_State == LOW) {
-    lcd.clear();
-    
-    if (modes == "atc") {
-      modes = "reg";
-    } else if (modes == "reg") {
-      modes = "atc";
-    }
-    
-    delay(500);
-  }
-  //----------------------------------------
-
+ 
   // Detect if reading the UID from the card or keychain was successful.
   readsuccess = getUID();
 
