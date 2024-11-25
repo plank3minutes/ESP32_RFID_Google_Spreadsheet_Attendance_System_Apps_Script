@@ -43,8 +43,7 @@ String UID_Result = "--------";
 String modes = "atc";
 
 // Create LiquidCrystal_I2C object as "lcd" and set the LCD I2C address to 0x27 and set the LCD configuration to 20x4.
-// In general, the address of a 20x4 I2C LCD is "0x27".
-// However, if the address "0x27" doesn't work, you can find out the address with "i2c_scanner". Look here : https://playground.arduino.cc/Main/I2cScanner/
+
 LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows);  // (lcd_address, lcd_Columns, lcd_Rows)
 
 // Create MFRC522 object as "mfrc522" and set SS/SDA PIN and Reset PIN.
@@ -175,19 +174,6 @@ void http_Req(String str_modes, String str_uid) {
           delay(500);
         }
 
-        if (atc_Info == "atcInf01") {
-          lcd.clear();
-          delay(500);
-          lcd.setCursor(1,0);
-          lcd.print("You have completed");
-          lcd.setCursor(2,1);
-          lcd.print("your  attendance");
-          lcd.setCursor(2,2);
-          lcd.print("record for today");
-          delay(5000);
-          lcd.clear();
-          delay(500);
-        }
 
         if (atc_Info == "atcErr01") {
           digitalWrite(RED_LED_PIN, HIGH);
@@ -325,8 +311,8 @@ void byteArray_to_string(byte array[], unsigned int len, char buffer[]) {
   for (unsigned int i = 0; i < len; i++) {
     byte nib1 = (array[i] >> 4) & 0x0F;
     byte nib2 = (array[i] >> 0) & 0x0F;
-    buffer[i*2+0] = nib1  < 0xA ? '0' + nib1  : 'A' + nib1  - 0xA;
-    buffer[i*2+1] = nib2  < 0xA ? '0' + nib2  : 'A' + nib2  - 0xA;
+    buffer[i*2+0] = nib1  < 0xA ? '0' + nib1  : 'A' + nib1  - 0xA; //i*2 10
+    buffer[i*2+1] = nib2  < 0xA ? '0' + nib2  : 'A' + nib2  - 0xA; 
   }
   buffer[len*2] = '\0';
 }
@@ -340,7 +326,7 @@ void setup(){
   Serial.println();
   delay(1000);
 
-  pinMode(BTN_PIN, INPUT_PULLUP);
+  
   pinMode(BUZZER_PIN, OUTPUT);  // Set the buzzer pin as output
   pinMode(GREEN_LED_PIN, OUTPUT); // Set LED xanh làm output
   pinMode(RED_LED_PIN, OUTPUT);   // Set LED đỏ làm output
@@ -464,35 +450,6 @@ void loop(){
   }
   //----------------------------------------
 
-  //----------------------------------------Conditions that are executed if modes == "reg".
-  if (modes == "reg") {
-    lcd.setCursor(4,0);
-    lcd.print("REGISTRATION");
-    lcd.setCursor(0,1);
-    lcd.print("");
-    lcd.setCursor(0,2);
-    lcd.print("Please tap your card");
-    lcd.setCursor(4,3);
-    lcd.print("or key chain");
-
-    if (readsuccess){
-      lcd.clear();
-      delay(500);
-      lcd.setCursor(0,0);
-      lcd.print("Getting  UID");
-      lcd.setCursor(0,1);
-      lcd.print("Successfully");
-      lcd.setCursor(0,2);
-      lcd.print("UID : ");
-      lcd.print(UID_Result);
-      lcd.setCursor(0,3);
-      lcd.print("Please wait...");
-      delay(1000);
-
-      http_Req(modes, UID_Result);
-    }
-  }
-  //----------------------------------------
 
   delay(10);
 }
