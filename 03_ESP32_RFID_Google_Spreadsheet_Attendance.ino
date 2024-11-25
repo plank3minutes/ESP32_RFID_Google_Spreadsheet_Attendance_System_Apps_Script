@@ -14,8 +14,6 @@
 #define RED_LED_PIN 22   // LED đỏ ở D22  
 
 
-// Defines the button PIN.
-#define BTN_PIN 15
 
 //----------------------------------------SSID and PASSWORD of your WiFi network.
 const char* ssid = "Samsung Galaxy S22 Ultra";  //--> Your wifi name
